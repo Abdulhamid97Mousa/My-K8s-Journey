@@ -15,9 +15,9 @@ Content present in the repository is inspierd by other people' sample exams, tra
 
 <details><summary>Containers Overview</summary>
 
-<details><summary>
-Why do you need containers ?
-</summary>
+
+## Why do you need containers ?
+
 Let me start by sharing how I got introduced to Docker. In one of my previous projects, I had this requirement to set up an end to end stack including various different technologies like a web server using node JS and database such as mongoDB and messaging system like Redis and an orchestration tool like ansible. 
 
 We had a lot of issues developing this application with all these different components. 
@@ -38,10 +38,10 @@ We also had different development test and production environments. One develope
 
 So I needed something that could help us with the compatibility issue. And something that will allow us to modify or change these components without affecting the other components and even modify the underlying operating systems as required. And that search landed me on Docker. With Docker I was able to run each component in a separate container – with its own libraries and its own dependencies. All on the same VM and the OS, but within separate environments or containers. We just had to build the docker configuration once, and all our developers could now get started with a simple “docker run” command. Irrespective of what underlying OS they run, all they needed to do was to make sure they had Docker installed on their systems.
 
-</details>
 
-<details><summary>
-So what are containers?</summary>
+
+
+## So what are containers?
 
 ![Alt text](image-2.png)
 
@@ -80,10 +80,10 @@ This allows docker containers to boot up faster, usually in a matter of seconds 
 It is also important to note that, Docker has less isolation as more resources are shared between containers like the kernel etc. Whereas VMs have complete isolation from each other. Since VMs don’t rely on the underlying OS or kernel, you can run different types of OS such as linux based or windows based on the same hypervisor.
 So these are some differences between the two.
 
-</details>
 
 
-<details><summary>How is it done ?</summary>
+
+## How is it done ?
 
 ![Alt text](image-6.png)
 
@@ -91,8 +91,6 @@ SO how is it done? There are a lot of containerized versions of applications rea
 bringing up an application stack, is as easy as running a docker run command with the name of the image. In this case running a docker run ansible command will run an instance of ansible on the docker host. 
 
 Similarly run an instance of mongodb, redis and nodejs using the docker run command. And then when you run nodejs just point to the location of the code repository on the host. If we need to run multiple instances of the web service, simply add as many instances as you need, and configure a load balancer of some kind in the front. In case one of the instances was to fail, simply destroy that instance and launch a new instance. There are other solutions available for handling such cases, that we will look at later during this course.
-</details>
-
 
 
 </details> 
