@@ -85,6 +85,8 @@ Kubernetes deploys and manages (orchestrates) applications that are packaged and
 We’ll talk about these concepts a lot throughout the book, but for now, this should help
 you understand some of the main industry buzzwords.
 
+
+## Kubernetes background (The Kubernetes Book)
 <details><summary> Kubernetes background (The Kubernetes Book) </summary>
 
 ## Where did Kubernetes come from
@@ -216,7 +218,7 @@ Kubernetes, here’s an app. Please deploy it and make sure it keeps running…�
 
 </details>
 
-<details><summary>Containers Overview</summary>
+<details><summary>Containers Overview (Kubernetes for the Absolute Beginners)</summary>
 
 
 ## Why do you need containers ?
@@ -320,7 +322,7 @@ With Docker, a major portion of work involved in setting up the infrastructure i
 </details>
 
 
-<details><summary>Container Orchestration</summary>
+<details><summary>Container Orchestration (Kubernetes for the Absolute Beginners)</summary>
 
 ![Alt text](Images/image-9.png)
 
@@ -348,8 +350,7 @@ And THAT IS Kubernetes. Kubernetes is a container Orchestration technology used 
 </details>
 
 
-
-<details><summary>Kubernetes Architecture</summary>
+<details><summary>Kubernetes Architecture (Kubernetes for the Absolute Beginners)</summary>
 
 Before we head into setting up a kubernetes cluster, it is important to understand some of the basic concepts. This is to make sense of the terms that we will come across while setting up a kubernetes cluster.
 
