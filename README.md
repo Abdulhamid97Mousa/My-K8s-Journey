@@ -393,7 +393,7 @@ services run on every control plane node.
 
 
 
-When you install Kubernetes on a System, you are actually installing the following components. 
+We have install Kubernetes on a Windows system, the setup consist of installing and setting up docker desktop software on windows, and then install and setting up minikube on a docker container using a docker driver. 
 
 * An API Server. 
 * An ETCD service. 
@@ -421,6 +421,9 @@ On the above figure, we can see all kubernetes components listed
 * registry.k8s.io/coredns/coredns
 * kicbase/stable:v0.0.37: is a reference to a container image, specifically one related to Minikube when it is running with its "KIC" (Kubernetes-in-Container) mode, especially when used with the Docker driver.
 
+
+### The API server
+
 The API server acts as the front-end for kubernetes. The users, management devices, Command line interfaces all talk to the API server to interact with the kubernetes cluster.
 
 <details><summary>kube-apiserver (More on API server)</summary>
@@ -440,9 +443,9 @@ and changes are scheduled to the worker nodes.
 
 </details>
 
+### The cluster store
 
 Next is the ETCD key store. ETCD is a distributed reliable key-value store used by kubernetes to store all data used to manage the cluster. Think of it this way, when you have multiple nodes and multiple masters in your cluster, etcd stores all that information on all the nodes in the cluster in a distributed manner. ETCD is responsible for implementing locks within the cluster to ensure there are no conflicts between the Masters.
-The scheduler is responsible for distributing work or containers across multiple nodes. It looks for newly created containers and assigns them to Nodes.
 
 
 <details><summary>The cluster store (More on ETCD key store)</summary>The cluster store is the only stateful part of the control plane and persistently stores the
@@ -463,6 +466,34 @@ example, multiple writes to the same value originating from different places nee
 handled. etcd uses the popular RAFT consensus algorithm to accomplish this.
 </details>
 
+
+### The scheduler ()
+
+The scheduler is responsible for distributing work or containers across multiple nodes. It looks for newly created containers and assigns them to Nodes.
+
+<details><summary>kube-scheduler (More on The scheduler)</summary>
+
+At a high level, the scheduler watches the API server for new work tasks and assigns
+them to appropriate healthy worker nodes. Behind the scenes, it implements complex
+logic that filters out nodes incapable of running tasks, and then ranks the nodes that are
+capable. The ranking system is complex, but the node with the highest-ranking score is
+selected to run the task.
+When identifying nodes capable of running a task, the scheduler performs various
+predicate checks. These include; is the node tainted, are there any affinity or antiaffinity
+rules, is the required network port available on the node, does it have sufficient
+available resources etc. Any node incapable of running the task is ignored, and those
+remaining are ranked according to things such as does it already have the required
+image, how much free resource does it have, how many tasks is it currently running.
+Each is worth points, and the node with the most points is selected to run the task.
+If the scheduler doesn’t find a suitable node, the task isn’t scheduled and gets marked as
+pending.
+The scheduler is only responsible for picking the nodes to run tasks, it isn’t responsible
+for running them. A task is normally a Pod/container. You’ll learn about Pods and
+containers in later chapters.
+
+</details>
+
+### The controller manager and controllers
 
 The controllers are the brain behind orchestration. They are responsible for noticing and responding when nodes, containers or endpoints goes down. The controllers makes decisions to bring up new containers in such cases.
 The container runtime is the underlying software that is used to run containers. In our case it happens to be Docker.
