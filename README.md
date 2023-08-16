@@ -87,9 +87,9 @@ you understand some of the main industry buzzwords.
 
 
 
-<details><summary> Kubernetes background (The Kubernetes Book) </summary>
+<details><summary> Where did Kubernetes come from ? (The Kubernetes Book) </summary>
 
-## Where did Kubernetes come from
+## Where did Kubernetes come from ?
 
 Let’s start at the beginning…
 Amazon Web Services (AWS) changed the world when it brought us modern cloud
