@@ -40,9 +40,9 @@ and virtual machines.
 
 Think of it this way:
 
-• Apps ran on physical servers in the open-systems era (1980s and 1990s)
-• Apps ran in virtual machines in the virtualisation era (2000s and into the 2010s)
-• Apps run in containers in the cloud-native era (now)
+• Apps ran on physical servers in the open-systems era (1980s and 1990s) \\
+• Apps ran in virtual machines in the virtualisation era (2000s and into the 2010s)  \\
+• Apps run in containers in the cloud-native era (now) \\
 
 While Kubernetes can orchestrate other workloads, including virtual machines, serverless
 functions, and WebAssembly, it’s most commonly used to orchestrate containerised
@@ -63,12 +63,12 @@ A microservices app is built from lots of small, specialised, independent parts 
 together to form a meaningful application. For example, you might have an e-commerce
 app comprising all of the following small, specialised, independent components:
 
-• Web front-end
-• Catalog service
-• Shopping cart
-• Authentication service
-• Logging service
-• Persistent store
+• Web front-end \\
+• Catalog service \\
+• Shopping cart  \\
+• Authentication service \\
+• Logging service \\ 
+• Persistent store  \\
 
 As each of these features is developed and deployed as its own small app, or small service,
 we call each one a microservice. Typically, each is coded and owned by a different
