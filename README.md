@@ -8,8 +8,7 @@ The repository contains Study-Guide and exercises preparing for Certified Kubern
 ### Inspiration
 Content present in the repository is inspierd by other people' sample exams, training exercises and my own invention. Use links below to check them out
 
-1. The Kubernetes Book by Nigel Poulton
-
+1. The Kubernetes Book by Nigel Poulton.
 2. Kubernetes for the Absolute Beginners - Hands-on created by Mumshad mannambeth, Kodekloud Training.
 
 
@@ -22,15 +21,12 @@ clarify some jargon.
 
 An orchestrator is a system that deploys and manages applications. It can deploy your
 applications and dynamically respond to changes. For example, Kubernetes can:
-• Deploy your application
 
-• Scale it up and down dynamically based on demand
-
-• Self-heal it when things break
-
-• Perform zero-downtime rolling updates and rollbacks
-
-• Lots more…
+* Deploy your application
+* Scale it up and down dynamically based on demand
+* Self-heal it when things break
+* Perform zero-downtime rolling updates and rollbacks
+* Lots more…
 
 And the best part about Kubernetes… it does all of this orchestration without you having
 to supervise or get involved. Obviously, you have to set things up in the first place, but
@@ -46,11 +42,9 @@ and virtual machines.
 
 Think of it this way:
 
-• Apps ran on physical servers in the open-systems era (1980s and 1990s) 
-
-• Apps ran in virtual machines in the virtualisation era (2000s and into the 2010s) 
-
-• Apps run in containers in the cloud-native era (now) 
+* Apps ran on physical servers in the open-systems era (1980s and 1990s)
+* Apps ran in virtual machines in the virtualisation era (2000s and into the 2010s)
+* Apps run in containers in the cloud-native era (now)
 
 While Kubernetes can orchestrate other workloads, including virtual machines, serverless
 functions, and WebAssembly, it’s most commonly used to orchestrate containerised
@@ -71,17 +65,12 @@ A microservices app is built from lots of small, specialised, independent parts 
 together to form a meaningful application. For example, you might have an e-commerce
 app comprising all of the following small, specialised, independent components:
 
-• Web front-end 
-
-• Catalog service 
-
-• Shopping cart  
-
-• Authentication service 
-
-• Logging service 
-
-• Persistent store  
+* Web front-end 
+* Catalog service 
+* Shopping cart  
+* Authentication service 
+* Logging service 
+* Persistent store  
 
 As each of these features is developed and deployed as its own small app, or small service,
 we call each one a microservice. Typically, each is coded and owned by a different
@@ -89,20 +78,14 @@ development team. Each can have its own release cycle and can be scaled independ
 For example, you can patch and scale the shopping cart microservice without affecting
 any of the others.
 
-Building applications this way is vital for cloud-native features.
-
-For the most part, each microservice runs as a container. Assuming this e-commerce
+Building applications this way is vital for cloud-native features. For the most part, each microservice runs as a container. Assuming this e-commerce
 app with the 6 microservices, there’d be one or more web front-end containers, one or
-more catalog containers, one or more shopping cart containers etc.
-With all of this in mind, let’s re-phrase that definition that was full of buzzwords…
-Kubernetes deploys and manages (orchestrates) applications that are packaged and run
-as containers (containerized) and that are built in ways (cloud-native microservices)
-that allow them to scale, self-heal, and be updated in-line with modern cloud-like
-requirements.
+more catalog containers, one or more shopping cart containers etc. With all of this in mind, let’s re-phrase that definition that was full of buzzwords…
+Kubernetes deploys and manages (orchestrates) applications that are packaged and run as containers (containerized) and that are built in ways (cloud-native microservices) that allow them to scale, self-heal, and be updated in-line with modern cloud-like requirements.
 We’ll talk about these concepts a lot throughout the book, but for now, this should help
 you understand some of the main industry buzzwords.
 
-<details><summary>Kubernetes background (The Kubernetes Book)<summary>
+<details><summary> Kubernetes background (The Kubernetes Book) </summary>
 
 ## Where did Kubernetes come from
 
@@ -136,6 +119,7 @@ Docker and Kubernetes have worked well together since the beginning of Kubernete
 Docker builds applications into container images and can run them as containers.
 Kubernetes can’t do either of those. Instead, it sits at a higher level and orchestrates
 things.
+
 Consider the following quick example. You have a Kubernetes cluster with 10 nodes for
 running your production applications. The first step is for your development teams to
 use Docker to package their applications as containers. Once this is done you give those
@@ -146,6 +130,7 @@ Docker that would start and stop containers. In this model, the Docker build too
 used to package applications as containers, Kubernetes makes scheduling and other
 orchestration decisions, and the Docker container runtime performs the low-level job
 of running containers.
+
 From the outside everything looked good. However, on closer inspection, the Docker
 runtime was bloated and overkill for what Kubernetes needed. As a result, the Kubernetes
 project began work to make the container runtime layer pluggable so that users
@@ -186,9 +171,9 @@ applications. In many ways, it’s like an operating system (OS) for the cloud.
 
 Consider this:
 
-• You install a traditional OS (Linux or Windows) on a server, and it abstracts server resources and schedules application processes
+* You install a traditional OS (Linux or Windows) on a server, and it abstracts server resources and schedules application processes
 
-• You install Kubernetes on a cloud, and it abstracts cloud resources and schedules application microservices
+* You install Kubernetes on a cloud, and it abstracts cloud resources and schedules application microservices
 
 In the same way that Linux abstracts the hardware differences between server platforms, Kubernetes abstracts the differences between different private and public clouds. Net
 result… as long as you’re running Kubernetes, it doesn’t matter if the underlying infrastructure is on premises in your own datacenters, or in the public cloud.
@@ -240,9 +225,9 @@ Let me start by sharing how I got introduced to Docker. In one of my previous pr
 
 We had a lot of issues developing this application with all these different components. 
 
-- First, their compatibility with the underlying operating system. We had to ensure that all these different services were compatible with the version of the operating system we were planning to use.
+* First, their compatibility with the underlying operating system. We had to ensure that all these different services were compatible with the version of the operating system we were planning to use.
 
-- There have been times when certain version of these services were not compatible with the OS and we had to go back and look for another OS there was compatible with all these different services. Secondly, we had to check the compatibility between the services and the libraries and dependencies on the OS. We've had issues where one service requires one version of a dependent library whereas another service required another version.
+* There have been times when certain version of these services were not compatible with the OS and we had to go back and look for another OS there was compatible with all these different services. Secondly, we had to check the compatibility between the services and the libraries and dependencies on the OS. We've had issues where one service requires one version of a dependent library whereas another service required another version.
 
 The architecture of our application changed over time. We've had to upgrade to newer version of these components or change the database etc. And every time something changed we had to go through the same process of checking compatibility between these various components and the underlying infrastructure. This compatibility matrix issue is usually referred to as The Matrix from Hell.
 
@@ -268,8 +253,8 @@ Containers are completely isolated environments. As in they can have their own p
 
 We will look at what that means in a bit. What is also important to note that containers are not new with Docker. 
 
-- Containers have existed for about 10 years now and some of the different types of containers are LXC, LXD, LXCFS etc…
-- Docker utilizes LXC containers. Setting up these container environments is hard as they are very low level and that is where a docker offers a high level tool with several powerful functions making it really easy for end users like us.
+* Containers have existed for about 10 years now and some of the different types of containers are LXC, LXD, LXCFS etc…
+* Docker utilizes LXC containers. Setting up these container environments is hard as they are very low level and that is where a docker offers a high level tool with several powerful functions making it really easy for end users like us.
 
 
 ![Alt text](Images/image-3.png)
