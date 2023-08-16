@@ -8,10 +8,212 @@ The repository contains Study-Guide and exercises preparing for Certified Kubern
 ### Inspiration
 Content present in the repository is inspierd by other people' sample exams, training exercises and my own invention. Use links below to check them out
 
-1. Kubernetes for the Absolute Beginners - Hands-on created by Mumshad mannambeth, Kodekloud Training.
+1. The Kubernetes Book by Nigel Poulton
+2. Kubernetes for the Absolute Beginners - Hands-on created by Mumshad mannambeth, Kodekloud Training.
 
 
 # Section 1: Kubernetes Overview
+
+Kubernetes is an application orchestrator. For the most part, it orchestrates containerized cloud-native microservices apps. That’s a lot of buzzwords, so let’s take some time to
+clarify some jargon.
+
+## What is an orchestrator
+
+An orchestrator is a system that deploys and manages applications. It can deploy your
+applications and dynamically respond to changes. For example, Kubernetes can:
+• Deploy your application
+• Scale it up and down dynamically based on demand
+• Self-heal it when things break
+• Perform zero-downtime rolling updates and rollbacks
+• Lots more…
+And the best part about Kubernetes… it does all of this orchestration without you having
+to supervise or get involved. Obviously, you have to set things up in the first place, but
+once you’ve done that, you sit back and let Kubernetes work its magic.
+
+## What is a containerised app
+
+A containerized application is an app that runs in a container.
+Before we had containers, applications ran on physical servers or in virtual machines.
+Containers are just the next iteration of how we package and run apps. As such, they’re
+faster, more lightweight, and more suited to modern business requirements than servers
+and virtual machines.
+
+Think of it this way:
+
+• Apps ran on physical servers in the open-systems era (1980s and 1990s)
+• Apps ran in virtual machines in the virtualisation era (2000s and into the 2010s)
+• Apps run in containers in the cloud-native era (now)
+
+While Kubernetes can orchestrate other workloads, including virtual machines, serverless
+functions, and WebAssembly, it’s most commonly used to orchestrate containerised
+apps.
+
+## What is a cloud-native app
+
+A cloud-native application is one that’s designed to meet cloud-like demands of autoscaling,
+self-healing, rolling updates, rollbacks and more.
+It’s important to be clear that cloud-native apps are not applications that will only run
+in the public cloud. Yes, they absolutely can run on public clouds, but they can also run
+anywhere that you have Kubernetes, even your on-premises datacenters.
+So, cloud-native is about the way applications behave and react to events.
+
+## What is a microservices app
+
+A microservices app is built from lots of small, specialised, independent parts that work
+together to form a meaningful application. For example, you might have an e-commerce
+app comprising all of the following small, specialised, independent components:
+
+• Web front-end
+• Catalog service
+• Shopping cart
+• Authentication service
+• Logging service
+• Persistent store
+
+As each of these features is developed and deployed as its own small app, or small service,
+we call each one a microservice. Typically, each is coded and owned by a different
+development team. Each can have its own release cycle and can be scaled independently.
+For example, you can patch and scale the shopping cart microservice without affecting
+any of the others.
+
+Building applications this way is vital for cloud-native features.
+
+For the most part, each microservice runs as a container. Assuming this e-commerce
+app with the 6 microservices, there’d be one or more web front-end containers, one or
+more catalog containers, one or more shopping cart containers etc.
+With all of this in mind, let’s re-phrase that definition that was full of buzzwords…
+Kubernetes deploys and manages (orchestrates) applications that are packaged and run
+as containers (containerized) and that are built in ways (cloud-native microservices)
+that allow them to scale, self-heal, and be updated in-line with modern cloud-like
+requirements.
+We’ll talk about these concepts a lot throughout the book, but for now, this should help
+you understand some of the main industry buzzwords.
+
+<details><summary>Kubernetes background (The Kubernetes Book)<summary>
+
+## Where did Kubernetes come from
+
+Let’s start at the beginning…
+Amazon Web Services (AWS) changed the world when it brought us modern cloud
+computing. Since then, everyone else has been playing catch-up.
+One of the companies trying to catch-up was Google. Google had its own very good
+cloud and needed a way to abstract the value of AWS, and make it easier for potential
+customers to get off AWS and onto their cloud.
+Google also had a lot of experience working with containers at scale. For example,
+huge Google applications, such as Search and Gmail, have been running at extreme
+scale on containers for a lot of years – since way before Docker brought us easy-to-use
+containers. To orchestrate and manage these containerised apps, Google had a couple of
+in-house proprietary technologies called Borg and Omega.
+Well, Google took the lessons learned from these in-house systems, and created a
+new platform called Kubernetes that it donated to the newly formed Cloud Native
+Computing Foundation (CNCF) in 2014 as an open-source project.
+
+Kubernetes enables two things Google and the rest of the industry needed:
+1. It abstracts underlying infrastructure such as AWS
+2. It simplifies moving applications on and off clouds
+Since its introduction in 2014, Kubernetes has become the most important cloud-native technology on the planet.
+
+## Kubernetes and Docker
+
+
+Docker and Kubernetes have worked well together since the beginning of Kubernetes.
+Docker builds applications into container images and can run them as containers.
+Kubernetes can’t do either of those. Instead, it sits at a higher level and orchestrates
+things.
+Consider the following quick example. You have a Kubernetes cluster with 10 nodes for
+running your production applications. The first step is for your development teams to
+use Docker to package their applications as containers. Once this is done you give those
+containerised apps to Kubernetes to run. Kubernetes makes high-level orchestration
+decisions such as which nodes should run the containers, but Kubernetes itself cannot
+start and stop containers. In the past, each Kubernetes cluster node ran a copy of
+Docker that would start and stop containers. In this model, the Docker build tools are
+used to package applications as containers, Kubernetes makes scheduling and other
+orchestration decisions, and the Docker container runtime performs the low-level job
+of running containers.
+From the outside everything looked good. However, on closer inspection, the Docker
+runtime was bloated and overkill for what Kubernetes needed. As a result, the Kubernetes
+project began work to make the container runtime layer pluggable so that users
+could choose the best runtime for their needs. We’ll get into more detail later in the
+book, but in 2016 Kubernetes introduced the container runtime interface (CRI) that
+made this container runtime layer pluggable. Since then, lots of different container
+runtimes have been developed for Kubernetes.
+
+At the time of writing, containerd (pronounced “container dee”) has replaced Docker
+as the default container runtime in most Kubernetes clusters. However, containerd is a
+stripped-down version of Docker that’s optimized for Kubernetes. As such, all container
+images created by Docker will continue to work on Kubernetes. In fact, both Docker
+and Kubernetes work with containers that support the Open Containers Initiative (OCI)
+specification.
+
+
+![shows a simple Kubernetes cluster with worker nodes using different
+container runtimes. Configurations like this are fully supported.](Images/image18.png)
+
+While all of this is interesting, it’s low-level stuff that shouldn’t impact your Kubernetes
+learning experience. For example, no matter which container runtime you use, the
+regular Kubernetes commands and patterns will work as normal.
+
+
+### What about Kubernetes vs Docker Swarm
+
+In 2016 and 2017 we had the orchestrator wars where Docker Swarm, Mesosphere DCOS,
+and Kubernetes competed to become the de-facto container orchestrator. To cut a long
+story short, Kubernetes won.
+However, Docker Swarm is still under active development and is popular with small
+companies that need a simple alternative to Kubernetes.
+
+
+## Kubernetes as the operating system of the cloud
+
+Kubernetes has emerged as the de facto platform for deploying and managing cloudnative
+applications. In many ways, it’s like an operating system (OS) for the cloud.
+Consider this:
+• You install a traditional OS (Linux or Windows) on a server, and it abstracts server
+resources and schedules application processes
+• You install Kubernetes on a cloud, and it abstracts cloud resources and schedules
+application microservices
+In the same way that Linux abstracts the hardware differences between server platforms,
+Kubernetes abstracts the differences between different private and public clouds. Net
+result… as long as you’re running Kubernetes, it doesn’t matter if the underlying
+infrastructure is on premises in your own datacenters, or in the public cloud.
+With this in mind, Kubernetes is a major step towards a true hybrid cloud, allowing you
+to seamlessly move and balance workloads across multiple different public and private
+cloud infrastructures. You can also migrate to and from different clouds, meaning you
+can choose one cloud today and switch to a different one in the future.
+
+### Cloud scale
+
+Generally speaking, cloud-native microservices applications make our previous
+scalability and complexity challenges look easy – we’ve just said Google goes through
+billions of containers every week!
+That’s great, but most of us are nothing like Google.
+Well, as a general rule, if your legacy apps have hundreds of VMs, there’s a good chance
+your containerized cloud-native microservices apps will have thousands of containers.
+With this in mind, you’ll need help managing them.
+Say hello to Kubernetes.
+Also, we live in a business and technology world that’s increasingly fragmented and
+constantly in a state of disruption. With this in mind, we desperately need a framework
+and platform that is widely accepted and hides complexity.
+Again, say hello to Kubernetes.
+
+### Application scheduling
+
+A typical computer is a collection of CPU, memory, storage, and networking. But
+modern operating systems have done a great job abstracting that. For example, how
+many developers care which CPU core or exact memory address their application uses?
+Not many, we let the OS take care of things like that. And it’s a good thing as it makes
+the world of application development a far friendlier place.
+Kubernetes does a similar thing with cloud and datacenter resources. At a high-level, a
+cloud or datacenter is a pool of compute, network, and storage resources. Kubernetes
+abstracts them, meaning you don’t have to hard code which node or storage volume
+your applications run on, you don’t even have to care which cloud they run on. Kubernetes
+takes care of all that.
+So, gone are the days of naming your servers, mapping storage volumes and IP addresses
+in spreadsheets, and otherwise treating your infrastructure assets like pets. Modern
+cloud-native apps don’t usually care. In the cloud-native world, we just say “Hey
+Kubernetes, here’s an app. Please deploy it and make sure it keeps running…“.
+
+</details>
 
 <details><summary>Containers Overview</summary>
 
