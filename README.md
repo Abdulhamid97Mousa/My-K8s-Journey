@@ -12,7 +12,7 @@ Content present in the repository is inspierd by other people' sample exams, tra
 2. Kubernetes for the Absolute Beginners - Hands-on created by Mumshad mannambeth, Kodekloud Training.
 
 
-# Section 1: Kubernetes Overview
+# Kubernetes background (The Kubernetes Book)
 
 Kubernetes is an application orchestrator. For the most part, it orchestrates containerized cloud-native microservices apps. That’s a lot of buzzwords, so let’s take some time to
 clarify some jargon.
@@ -86,7 +86,7 @@ We’ll talk about these concepts a lot throughout the book, but for now, this s
 you understand some of the main industry buzzwords.
 
 
-## Kubernetes background (The Kubernetes Book)
+
 <details><summary> Kubernetes background (The Kubernetes Book) </summary>
 
 ## Where did Kubernetes come from
@@ -217,6 +217,8 @@ cloud-native apps don’t usually care. In the cloud-native world, we just say �
 Kubernetes, here’s an app. Please deploy it and make sure it keeps running…“.
 
 </details>
+
+# Section 1: Kubernetes Overview
 
 <details><summary>Containers Overview (Kubernetes for the Absolute Beginners)</summary>
 
