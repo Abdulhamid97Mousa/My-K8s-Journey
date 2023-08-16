@@ -469,7 +469,7 @@ handled. etcd uses the popular RAFT consensus algorithm to accomplish this.
 </details>
 
 
-### The scheduler ()
+### The scheduler
 
 The scheduler is responsible for distributing work or containers across multiple nodes. It looks for newly created containers and assigns them to Nodes.
 
@@ -551,3 +551,6 @@ The kubectl run command is used to deploy an application on the cluster. The kub
 For now just remember the run, cluster-info and get nodes commands and that will help us get through the first few labs.
 
 </details>
+
+
+
