@@ -402,14 +402,13 @@ We have install Kubernetes on a Windows system, the setup consist of installing 
 
 ![Alt text](Images/image19.png)
 
-In the above figure, we have installed Minikube, Minikube is a local implementation kubernetes to learn kubernetes. All you need is Docker (or similarly compatible) container or a Virtual Machine environment, and Kubernetes is a single command away: 
+In the above figure, we have installed Minikube, Minikube is a local implementation of kubernetes, and it's a popular tool to learn kubernetes. All you need is Docker (or similarly compatible) container or a Virtual Machine environment, and Kubernetes is a single command away: 
 
 ```shell
 minikube start
 ```
 
-
-In our case, we have installed Minikube on a docker container, and this was made possible using docker desktop software.
+In our case, we have installed Minikube on a docker container, and this was made possible using docker desktop software. to install kubernetes please go to kubernetes setup section.
 
 ![Alt text](Images/image20.png)
 
