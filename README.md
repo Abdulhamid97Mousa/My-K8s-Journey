@@ -356,9 +356,8 @@ Before we head into setting up a kubernetes cluster, it is important to understa
 ![Alt text](Images/image12.png)
 
 Let us start with Nodes. A node is a machine – physical or virtual – on which kubernetes is installed. A node is a worker machine and this is were containers will be launched by kubernetes.
-It was also known as Minions in the past. So you might here these terms used inter changeably.
-But what if the node on which our application is running fails? Well, obviously our application goes down. So you need to have more than one nodes.
 
+It was also known as Minions in the past. So you might here these terms used inter changeably. But what if the node on which our application is running fails? Well, obviously our application goes down. So you need to have more than one nodes.
 
 ![Alt text](Images/image13.png)
 
@@ -368,16 +367,134 @@ A cluster is a set of nodes grouped together. This way even if one node fails yo
 
 Now we have a cluster, but who is responsible for managing the cluster? Were is the information about the members of the cluster stored? How are the nodes monitored? When a node fails how do you move the workload of the failed node to another worker node? That’s were the Master comes in. The master is another node with Kubernetes installed in it, and is configured as a Master. The master watches over the nodes in the cluster and is responsible for the actual orchestration of containers on the worker nodes.
 
+
+## Control plane and worker nodes (The Kubernetes Book)
+
+As previously mentioned, a Kubernetes cluster is made of control plane nodes and worker nodes. These are Linux hosts that can be virtual machines (VM), bare metal servers in your datacenters, or instances in a private or public cloud. You can even run Kubernetes on ARM and IoT devices.
+
+### The control plane 
+A Kubernetes control plane node runs a collection of system services that make up the
+control plane of the cluster. Sometimes we call them Masters, Heads or Head nodes.
+However, the term “master” is no longer used.
+The simplest setups run a single control plane node. However, this is only suitable
+for labs and test environments. For production environments, multiple control plane
+nodes configured for high availability (HA) are vital. Generally speaking, 3 or 5 is
+recommended, and you should spread them across availability zones.
+It’s also considered a good practice not to run user applications on control plane nodes.
+This allows them to concentrate entirely on managing the cluster.
+Let’s take a quick look at the different services making up the control plane. All of these
+services run on every control plane node.
+
+
 ![Alt text](Images/image15.png)
 
-When you install Kubernetes on a System, you are actually installing the following components. An API Server. An ETCD service. A kubelet service. A Container Runtime, Controllers and Schedulers.
+
+
+When you install Kubernetes on a System, you are actually installing the following components. 
+
+* An API Server. 
+* An ETCD service. 
+* A kubelet service. 
+* A Container Runtime, 
+* Controllers 
+* Schedulers.
+
+![Alt text](Images/image19.png)
+
+In the above figure, we have installed Minikube, Minikube is a local implementation kubernetes to learn kubernetes. All you need is Docker (or similarly compatible) container or a Virtual Machine environment, and Kubernetes is a single command away: minikube start
+
+In our case, we have installed Minikube on a docker container, and this was made possible using docker desktop software.
+
+![Alt text](Images/image20.png)
+
+On the above figure, we can see all kubernetes components listed
+
+* registry.k8s.io/kube-apiserver
+* registry.k8s.io/kube-scheduler
+* registry.k8s.io/kube-controller-manager
+* registry.k8s.io/kube-proxy
+* registry.k8s.io/etcd
+* registry.k8s.io/pause
+* registry.k8s.io/coredns/coredns
+* kicbase/stable:v0.0.37: is a reference to a container image, specifically one related to Minikube when it is running with its "KIC" (Kubernetes-in-Container) mode, especially when used with the Docker driver.
+
 The API server acts as the front-end for kubernetes. The users, management devices, Command line interfaces all talk to the API server to interact with the kubernetes cluster.
+
+<details><summary>kube-apiserver (More on API server)</summary>
+
+The API server is the Grand Central station of Kubernetes. All communication, between
+all components, must go through the API server. We’ll get into the detail later,
+but it’s important to understand that internal system components, as well as external
+user components, all communicate through the API server – all roads lead to the API
+Server.
+It exposes a RESTful API that you POST YAML configuration files to over HTTPS.
+These YAML files, which we sometimes call manifests, describe the desired state of an
+application. This desired state includes things like which container images to use, which
+ports to expose, and how many Pod replicas to run.
+All requests to the API server are subject to authentication and authorization. Once
+these are done, the config in the YAML file is validated, persisted to the cluster store,
+and changes are scheduled to the worker nodes.
+
+</details>
+
+
 Next is the ETCD key store. ETCD is a distributed reliable key-value store used by kubernetes to store all data used to manage the cluster. Think of it this way, when you have multiple nodes and multiple masters in your cluster, etcd stores all that information on all the nodes in the cluster in a distributed manner. ETCD is responsible for implementing locks within the cluster to ensure there are no conflicts between the Masters.
 The scheduler is responsible for distributing work or containers across multiple nodes. It looks for newly created containers and assigns them to Nodes.
+
+
+<details><summary>The cluster store (More on ETCD key store)</summary>The cluster store is the only stateful part of the control plane and persistently stores the
+entire configuration and state of the cluster. As such, it’s a vital component of every
+Kubernetes cluster – no cluster store, no cluster.
+The cluster store is currently based on etcd, a popular distributed database. As it’s the
+single source of truth for a cluster, you should run between 3-5 etcd replicas for highavailability,
+and you should provide adequate ways to recover when things go wrong.
+A default installation of Kubernetes installs a replica of the cluster store on every control
+plane node and automatically configures HA.
+
+On the topic of availability, etcd prefers consistency over availability. This means it
+doesn’t tolerate split-brains and will halt updates to the cluster in order to maintain
+consistency. However, if this happens, user applications should continue to work, you
+just won’t be able to update the cluster config.
+As with all distributed databases, consistency of writes to the database is vital. For
+example, multiple writes to the same value originating from different places need to be
+handled. etcd uses the popular RAFT consensus algorithm to accomplish this.
+</details>
+
 
 The controllers are the brain behind orchestration. They are responsible for noticing and responding when nodes, containers or endpoints goes down. The controllers makes decisions to bring up new containers in such cases.
 The container runtime is the underlying software that is used to run containers. In our case it happens to be Docker.
 And finally kubelet is the agent that runs on each node in the cluster. The agent is responsible for making sure that the containers are running on the nodes as expected.
+
+<details><summary>The controller manager and controllers (More on controllers)</summary>
+
+The controller manager implements all the background controllers that monitor cluster
+components and respond to events.
+Architecturally, the controller manager is a controller of controllers, meaning it spawns all
+the core controllers and monitors them.
+Some of the core controllers include the Deployment controller, the StatefulSet
+controller, and the ReplicaSet controller. Each one is responsible for a small subset of
+cluster intelligence and runs as a background watch-loop constantly watching the API
+Server for changes.
+The goal of each controller is to ensure the observed state of the cluster matches the
+desired state. More on this soon.
+The following logic, implemented by each controller, is at the heart of Kubernetes and
+declarative design patterns:
+
+1. Obtain desired state
+2. Observe current state
+3. Determine differences
+4. Reconcile differences
+
+Each controller is also extremely specialized and only interested in its own little
+corner of the Kubernetes cluster. No attempt is made to over-complicate design by
+implementing awareness of other parts of the system. This is key to the distributed
+design of Kubernetes and adheres to the Unix philosophy of building complex systems
+from small specialized parts.
+
+Terminology: Throughout the book we’ll use terms like controller, control loop,
+watch loop, and reconciliation loop to mean the same thing.
+
+</details>
 
 ![Alt text](Images/image16.png)
 
