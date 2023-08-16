@@ -9,6 +9,7 @@ The repository contains Study-Guide and exercises preparing for Certified Kubern
 Content present in the repository is inspierd by other people' sample exams, training exercises and my own invention. Use links below to check them out
 
 1. The Kubernetes Book by Nigel Poulton
+
 2. Kubernetes for the Absolute Beginners - Hands-on created by Mumshad mannambeth, Kodekloud Training.
 
 
@@ -22,10 +23,15 @@ clarify some jargon.
 An orchestrator is a system that deploys and manages applications. It can deploy your
 applications and dynamically respond to changes. For example, Kubernetes can:
 • Deploy your application
+
 • Scale it up and down dynamically based on demand
+
 • Self-heal it when things break
+
 • Perform zero-downtime rolling updates and rollbacks
+
 • Lots more…
+
 And the best part about Kubernetes… it does all of this orchestration without you having
 to supervise or get involved. Obviously, you have to set things up in the first place, but
 once you’ve done that, you sit back and let Kubernetes work its magic.
@@ -40,9 +46,11 @@ and virtual machines.
 
 Think of it this way:
 
-• Apps ran on physical servers in the open-systems era (1980s and 1990s) \\
-• Apps ran in virtual machines in the virtualisation era (2000s and into the 2010s)  \\
-• Apps run in containers in the cloud-native era (now) \\
+• Apps ran on physical servers in the open-systems era (1980s and 1990s) 
+
+• Apps ran in virtual machines in the virtualisation era (2000s and into the 2010s) 
+
+• Apps run in containers in the cloud-native era (now) 
 
 While Kubernetes can orchestrate other workloads, including virtual machines, serverless
 functions, and WebAssembly, it’s most commonly used to orchestrate containerised
@@ -63,12 +71,17 @@ A microservices app is built from lots of small, specialised, independent parts 
 together to form a meaningful application. For example, you might have an e-commerce
 app comprising all of the following small, specialised, independent components:
 
-• Web front-end \\
-• Catalog service \\
-• Shopping cart  \\
-• Authentication service \\
-• Logging service \\ 
-• Persistent store  \\
+• Web front-end 
+
+• Catalog service 
+
+• Shopping cart  
+
+• Authentication service 
+
+• Logging service 
+
+• Persistent store  
 
 As each of these features is developed and deployed as its own small app, or small service,
 we call each one a microservice. Typically, each is coded and owned by a different
@@ -109,8 +122,11 @@ new platform called Kubernetes that it donated to the newly formed Cloud Native
 Computing Foundation (CNCF) in 2014 as an open-source project.
 
 Kubernetes enables two things Google and the rest of the industry needed:
+
 1. It abstracts underlying infrastructure such as AWS
+
 2. It simplifies moving applications on and off clouds
+
 Since its introduction in 2014, Kubernetes has become the most important cloud-native technology on the planet.
 
 ## Kubernetes and Docker
@@ -167,17 +183,17 @@ companies that need a simple alternative to Kubernetes.
 
 Kubernetes has emerged as the de facto platform for deploying and managing cloudnative
 applications. In many ways, it’s like an operating system (OS) for the cloud.
+
 Consider this:
-• You install a traditional OS (Linux or Windows) on a server, and it abstracts server
-resources and schedules application processes
-• You install Kubernetes on a cloud, and it abstracts cloud resources and schedules
-application microservices
-In the same way that Linux abstracts the hardware differences between server platforms,
-Kubernetes abstracts the differences between different private and public clouds. Net
-result… as long as you’re running Kubernetes, it doesn’t matter if the underlying
-infrastructure is on premises in your own datacenters, or in the public cloud.
-With this in mind, Kubernetes is a major step towards a true hybrid cloud, allowing you
-to seamlessly move and balance workloads across multiple different public and private
+
+• You install a traditional OS (Linux or Windows) on a server, and it abstracts server resources and schedules application processes
+
+• You install Kubernetes on a cloud, and it abstracts cloud resources and schedules application microservices
+
+In the same way that Linux abstracts the hardware differences between server platforms, Kubernetes abstracts the differences between different private and public clouds. Net
+result… as long as you’re running Kubernetes, it doesn’t matter if the underlying infrastructure is on premises in your own datacenters, or in the public cloud.
+
+With this in mind, Kubernetes is a major step towards a true hybrid cloud, allowing you to seamlessly move and balance workloads across multiple different public and private
 cloud infrastructures. You can also migrate to and from different clouds, meaning you
 can choose one cloud today and switch to a different one in the future.
 
@@ -225,6 +241,7 @@ Let me start by sharing how I got introduced to Docker. In one of my previous pr
 We had a lot of issues developing this application with all these different components. 
 
 - First, their compatibility with the underlying operating system. We had to ensure that all these different services were compatible with the version of the operating system we were planning to use.
+
 - There have been times when certain version of these services were not compatible with the OS and we had to go back and look for another OS there was compatible with all these different services. Secondly, we had to check the compatibility between the services and the libraries and dependencies on the OS. We've had issues where one service requires one version of a dependent library whereas another service required another version.
 
 The architecture of our application changed over time. We've had to upgrade to newer version of these components or change the database etc. And every time something changed we had to go through the same process of checking compatibility between these various components and the underlying infrastructure. This compatibility matrix issue is usually referred to as The Matrix from Hell.
