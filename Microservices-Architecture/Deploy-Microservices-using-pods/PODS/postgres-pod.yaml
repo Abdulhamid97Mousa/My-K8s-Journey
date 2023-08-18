@@ -1,0 +1,22 @@
+### This pod has a problem, the worker node is not able to access the db because env name and password are not enough to authenticate the user, please go to ./MICROSERVICES-DEMO/Fix-postgres-problem directory and run it as deployment, before running the worker node
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: postgres-pod
+  labels:
+    name: postgres-pod
+    app: demo-voting-app
+spec:
+  containers:
+  - name: postgres
+    image: postgres
+    ports:
+    - containerPort: 5432
+    env:
+    - name: POSTGRES_USER
+      value: postgres
+    - name: POSTGRES_PASSWORD
+      value: postgres
+    - name: POSTGRES_HOST_AUTH_METHOD
+      value: trust

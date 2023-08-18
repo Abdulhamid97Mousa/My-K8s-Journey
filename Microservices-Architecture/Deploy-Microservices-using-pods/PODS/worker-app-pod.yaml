@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: worker-app-pod
+  labels:
+    name: worker-app-pod
+    app: demo-voting-app
+spec:
+  containers:
+  - name: worker-app
+    image: kodekloud/examplevotingapp_worker:v1
+
+# the worker node tries to access  redis in memory data base via the name redis
+
+# the worker node tries to access postgres database via the name db
+
+#  pgsql = OpenDbConnection("Server=db;Username=postgres;Password=postgres;");
+# var redisConn = OpenRedisConnection.("redis"); 
+# var redis = redisConn.GetDatabase(); 
